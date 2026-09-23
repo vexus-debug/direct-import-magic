@@ -9,7 +9,7 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { session, loading } = useAuth();
-  const devPreview = typeof window !== "undefined" && window.location.search.includes("__devpreview");
+  const devPreview = typeof window !== "undefined" && window.localStorage.getItem("__devpreview") === "1";
   if (devPreview) return <>{children}</>;
   const location = useLocation();
 

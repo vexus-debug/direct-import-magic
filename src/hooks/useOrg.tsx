@@ -28,7 +28,7 @@ export function OrgProvider({ children }: { children: ReactNode }) {
   const [currentOrg, setCurrentOrg] = useState<OrgContextType["currentOrg"]>(null);
 
   const isSuperAdmin = roles.includes("super_admin");
-  const devPreview = typeof window !== "undefined" && window.location.search.includes("__devpreview");
+  const devPreview = typeof window !== "undefined" && window.localStorage.getItem("__devpreview") === "1";
 
   const setCurrentOrgBySlug = (targetSlug: string) => {
     const membership = orgMemberships.find((m) => m.org_slug === targetSlug);
