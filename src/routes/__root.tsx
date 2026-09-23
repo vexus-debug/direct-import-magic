@@ -130,6 +130,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => { console.log("MOUNT RootComponent", performance.now()); return () => console.log("UNMOUNT RootComponent", performance.now()); }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
