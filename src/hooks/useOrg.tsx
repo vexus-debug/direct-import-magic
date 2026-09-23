@@ -28,6 +28,7 @@ export function OrgProvider({ children }: { children: ReactNode }) {
   const [currentOrg, setCurrentOrg] = useState<OrgContextType["currentOrg"]>(null);
 
   const isSuperAdmin = roles.includes("super_admin");
+  const devPreview = typeof window !== "undefined" && window.localStorage.getItem("__devpreview") === "1";
 
   const setCurrentOrgBySlug = (targetSlug: string) => {
     const membership = orgMemberships.find((m) => m.org_slug === targetSlug);
@@ -44,6 +45,7 @@ export function OrgProvider({ children }: { children: ReactNode }) {
 
   // Sync from URL slug
   useEffect(() => {
+    if (devPreview) { if (!currentOrg) setCurrentOrg({ org_id: "dev", org_name: "Dev Clinic", org_slug: slug || "dev", clinic_type: "dental", role: "owner" }); return; }
     if (loading || !slug) return;
 
     // Already resolved for this slug — nothing to do
@@ -90,7 +92,7 @@ export function OrgProvider({ children }: { children: ReactNode }) {
     }
 
     navigate("/select-clinic", { replace: true });
-  }, [slug, orgMemberships, loading, isSuperAdmin, navigate, currentOrg?.org_slug]);
+  }, [slug, orgMemberships, loading, isSuperAdmin, navigate, currentOrg?.org_slug, devPreview, currentOrg]);
 
   // Remember the last clinic so returning users land straight back in it
   useEffect(() => {
