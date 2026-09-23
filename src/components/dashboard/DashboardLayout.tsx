@@ -112,7 +112,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           ) : (
             <>
               <main className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 lg:px-8 lg:py-7 scroll-momentum">
-                <div className="mx-auto w-full max-w-[1540px]">{children}</div>
+                <motion.div initial={false} className="mx-auto w-full max-w-[1540px]">
+                  {children}
+                </motion.div>
               </main>
               <AICopilotPanel open={aiOpen} onClose={() => setAiOpen(false)} />
             </>
